@@ -62,7 +62,10 @@ RUN  --mount=type=bind,from=mlocati/php-extension-installer:latest,source=/usr/b
      spl\
      tokenizer\
      xmlwriter\
-     xsl &&\
+     xsl \
+     pdo_sqlsrv \
+     sqlsrv\
+     &&\
     apt-get autoremove && apt-get autoclean &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* cache/* /var/lib/log/*
 

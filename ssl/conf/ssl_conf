@@ -9,6 +9,6 @@ prompt=no
 [ req_distinguished_name ]
 countryName         = GR
 stateOrProvinceName = Attica
-localityName        = Echarnes
-organizationName    = PC_MAGAS
+localityName        = Acharnes
+organizationName    = TECHINS
 commonName          = example.local
