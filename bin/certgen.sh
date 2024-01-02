@@ -30,7 +30,7 @@ CA_KEY=${CA_PATH}/ca.key
 CA_CERT=${CA_PATH}/ca.crt 
 
 if [[ -d ${CA_CERT} ]] || [[ -d ${CA_KEY} ]]; then
-     echo "CA Certs are directoreis not files"
+     echo "CA Certs are directories not files"
      rm -rf ${CA_KEY}
      rm -rf ${CA_CERT}
 fi
