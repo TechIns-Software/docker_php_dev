@@ -10,6 +10,7 @@ services:
       args:
         - COMPOSER_VERSION=latest
         - XDEBUG_VERSION=latest
+        - PHP_VERSION=8.2
     volumes:
       - "php_app:/var/www/html"
       - "./logs/xdebug:/var/log/xdebug"
