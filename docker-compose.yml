@@ -46,7 +46,7 @@ services:
       - ./volumes/db/log:/var/opt/mssql/log
     environment:
       ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: "T3stp@sswd"
+      MSSQL_SA_PASSWORD: "T3stpsswd"
       MSSQL_PID: "Developer"
 
 
