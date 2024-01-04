@@ -13,6 +13,7 @@ services:
         - PHP_VERSION=8.2
     volumes:
       - "php_app:/var/www/html"
+      - "./conf/php/conf.d:/usr/local/etc/php/conf.d"
       - "./logs/xdebug:/var/log/xdebug"
       - "./ssl/ca/ca.crt:/usr/local/share/cert_install/ca.crt"
       - "./volumes/www-home:/home/www-data"
@@ -42,14 +43,15 @@ services:
       private:
       public:
         ipv4_address: ${IP_BASE}.3
+    command: bash -c "chmod -R 777 /usr/src/sql/ && /opt/mssql/bin/sqlservr"
     volumes:
       - ./volumes/db/data:/var/opt/mssql/data
       - ./volumes/db/log:/var/opt/mssql/log
+      - ./sql:/usr/src/sql
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: "T3stpsswd"
       MSSQL_PID: "Developer"
-
 
 volumes:
 

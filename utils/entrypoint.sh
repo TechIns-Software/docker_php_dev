@@ -22,7 +22,7 @@ cat ${XDEBUG_CONF_FILE}
 if [ "${XDEBUG_VERSION}" = "3" ]; then
   echo "SETUP XDEBUG 3"
 
-  echo "[xdebug]" >> ${XDEBUG_CONF_FILE} 
+  echo "[xdebug]" > ${XDEBUG_CONF_FILE} 
   echo "xdebug.max_nesting_level = 1000" >> ${XDEBUG_CONF_FILE} 
   echo "xdebug.log = /var/log/xdebug/xdebug.log" >> ${XDEBUG_CONF_FILE} 
   echo "xdebug.discover_client_host=false" >> ${XDEBUG_CONF_FILE}
@@ -41,7 +41,7 @@ else
   echo "SETUP XDEBUG 2"
 
   
-  echo "xdebug.max_nesting_level = 1000" >>  ${XDEBUG_CONF_FILE}
+  echo "xdebug.max_nesting_level = 1000" >  ${XDEBUG_CONF_FILE}
   echo "xdebug.remote_mode=req" >>  ${XDEBUG_CONF_FILE}
   echo "xdebug.remote_autostart=true" >> ${XDEBUG_CONF_FILE}
   echo "xdebug.remote_log=/var/log/xdebug/xdebug.log" >> ${XDEBUG_CONF_FILE}
