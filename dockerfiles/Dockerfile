@@ -6,7 +6,7 @@ ARG COMPOSER_VERSION=latest\
 # Uncomment line bellow for Nodejs support.
 # FROM node:${NODE_VERSION} as node
 FROM composer:${COMPOSER_VERSION} as composer
-FROM php:${PHP_VERSION}-fpm
+FROM namoshek/php-mssql:${PHP_VERSION}-fpm
 
 ENV PHP_CONF_DIR="$PHP_INI_DIR/conf.d" \
     PHP_SETTINGS="$PHP_INI_DIR/php.ini"\
@@ -54,7 +54,7 @@ RUN  --mount=type=bind,from=mlocati/php-extension-installer:latest,source=/usr/b
      openssl\ 
      mbstring\ 
      pcre\
-     pdo pdo_mysql\
+     pdo\
      simplexml\
      soap \
      sockets\
@@ -63,8 +63,6 @@ RUN  --mount=type=bind,from=mlocati/php-extension-installer:latest,source=/usr/b
      tokenizer\
      xmlwriter\
      xsl \
-     pdo_sqlsrv \
-     sqlsrv\
      &&\
     apt-get autoremove && apt-get autoclean &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* cache/* /var/lib/log/*
