@@ -4,13 +4,14 @@ services:
   # PHP APPS
   php_app:
     container_name: php_app
-    build:
-      context: .
-      dockerfile: ./dockerfiles/Dockerfile
-      args:
-        - COMPOSER_VERSION=latest
-        - XDEBUG_VERSION=latest
-        - PHP_VERSION=8.2
+    # build:
+    #   context: .
+    #   dockerfile: ./dockerfiles/Dockerfile
+    #   args:
+    #     - COMPOSER_VERSION=latest
+    #     - XDEBUG_VERSION=latest
+    #     - PHP_VERSION=8.2
+    image: ddesyllas402/mssql-php
     volumes:
       - "php_app:/var/www/html"
       - "./conf/php/conf.d:/usr/local/etc/php/conf.d"
