@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 WEB_USER="www-data"
 
@@ -30,6 +30,8 @@ if [ "${XDEBUG_VERSION}" = "3" ]; then
 
   echo "xdebug.client_host=${XDEBUG_HOST}" >> ${XDEBUG_CONF_FILE}
   echo "xdebug.client_port=${XDEBUG_PORT}" >> ${XDEBUG_CONF_FILE}
+
+  XDEBUG_ENABLE=$(echo "${XDEBUG_ENABLE}" | tr '[:upper:]' '[:lower:]')
 
   if [ "${XDEBUG_ENABLE}" == "true" ]; then
    echo "xdebug.mode = debug,develop" >> ${XDEBUG_CONF_FILE}
