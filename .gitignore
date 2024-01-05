@@ -17,3 +17,5 @@ ssl/ca/*
 
 ssl/certs/*
 !ssl/certs/.gitkeep
+
+conf/php/**
