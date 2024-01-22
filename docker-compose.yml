@@ -4,14 +4,13 @@ services:
   # PHP APPS
   php_app:
     container_name: php_app
-    # build:
-    #   context: .
-    #   dockerfile: ./dockerfiles/Dockerfile
-    #   args:
-    #     - COMPOSER_VERSION=latest
-    #     - XDEBUG_VERSION=latest
-    #     - PHP_VERSION=8.2
-    image: ddesyllas402/mssql-php
+    build:
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile
+      args:
+        - COMPOSER_VERSION=latest
+        - XDEBUG_VERSION=latest
+        - PHP_VERSION=8.2
     volumes:
       - "php_app:/var/www/html"
       - "./conf/php/conf.d:/usr/local/etc/php/conf.d"
@@ -21,6 +20,14 @@ services:
     networks:
       private:
     env_file: env/php.env
+
+  js-build:
+    image: node:latest
+    user: "${UID}:node"
+    entrypoint: bash -c "npm install && npm run build_dev"
+    working_dir: "/home/node/app"
+    volumes:
+      - "php_app:/home/node/app"
 
   # Supportive services
   
