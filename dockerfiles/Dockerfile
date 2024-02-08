@@ -4,7 +4,7 @@ ARG COMPOSER_VERSION=latest\
     NODE_VERSION=latest
 
 # Uncomment line bellow for Nodejs support.
-# FROM node:${NODE_VERSION} as node
+FROM node:${NODE_VERSION} as node
 FROM composer:${COMPOSER_VERSION} as composer
 FROM php:${PHP_VERSION}-fpm
 
