@@ -48,6 +48,14 @@ services:
     volumes:
       - ./volumes/db:/var/lib/mysql
 
+  js-build:
+    image: node:latest
+    user: "${NODEJS_UID}:node"
+    entrypoint: bash -c "ls -l && echo HELLO && npm install && npm run build_dev"
+    working_dir: "/home/node/app"
+    volumes:
+      - "php_app:/home/node/app"
+
 volumes:
 
   php_app:
