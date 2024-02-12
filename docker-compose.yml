@@ -56,6 +56,17 @@ services:
     volumes:
       - "php_app:/home/node/app"
 
+  localS3:
+    image: scireum/s3-ninja
+    user: "${NODEJS_UID}:sirius"
+    volumes:
+      - "./volumes/s3/data:/home/sirius/data"
+      - "./volumes/s3/logs:/home/sirius/logs"
+    networks:
+      private:
+      public:
+        ipv4_address: ${IP_BASE}.4
+
 volumes:
 
   php_app:
