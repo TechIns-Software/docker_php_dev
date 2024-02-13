@@ -65,7 +65,6 @@ RUN  --mount=type=bind,from=mlocati/php-extension-installer:latest,source=/usr/b
      xsl &&\
     apt-get autoremove && apt-get autoclean &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* cache/* /var/lib/log/*
-
 # Install composer & git
 COPY --from=composer /usr/bin/composer /opt/composer
 RUN --mount=type=bind,from=mlocati/php-extension-installer:latest,source=/usr/bin/install-php-extensions,target=/usr/local/bin/install-php-extensions \
@@ -100,6 +99,9 @@ RUN echo ${XDEBUG_VERSION} &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* cache/* /var/lib/log/*
 
 VOLUME /var/log/xdebug
+
+RUN echo "request_terminate_timeout = 1000s" > /usr/local/etc/php/conf.d/custom.ini \
+    && echo "max_execution_time = 1000s" >> /usr/local/etc/php/conf.d/custom.ini
 
 # ***************************************************#
 # Uncomment for nodejs (for example frontend builds) #

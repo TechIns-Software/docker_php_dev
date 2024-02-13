@@ -57,7 +57,7 @@ services:
     volumes:
       - "php_app:/home/node/app"
 
-  localS3:
+  s3:
     image: scireum/s3-ninja
     user: "0:sirius"
     volumes:
