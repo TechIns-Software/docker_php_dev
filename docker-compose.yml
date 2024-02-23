@@ -50,6 +50,7 @@ services:
       - ./provision/mariadb/create-test-db.sh:/docker-entrypoint-initdb.d/create-test-db.sh
 
   js-build:
+    container_name: esupport-frotnend-build
     image: node:latest
     user: "${NODEJS_UID}:node"
     entrypoint: bash -c "ls -l && echo HELLO && npm install && npm run build_dev"
