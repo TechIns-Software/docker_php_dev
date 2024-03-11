@@ -69,6 +69,22 @@ services:
       public:
         ipv4_address: ${IP_BASE}.4
 
+  mailpit:
+    image: axllent/mailpit
+    container_name: mailpit
+    restart: always
+    volumes:
+      - ./volumes/mailpit:/data
+    networks:
+      private:
+      public:
+        ipv4_address: ${IP_BASE}.6
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATA_FILE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
 volumes:
 
   php_app:
