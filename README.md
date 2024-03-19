@@ -59,6 +59,10 @@ Also there is a volume mounted upon `logs/xdebug` where the xdebug log ist store
 ## Mariadb
 
 The folder `./volumes/db` is mapped into `/var/lib/mysql` via bind mount therefore upon `docker-compose down -v` will NOT be deleted.
+Also 2 databases are created:
+
+* One configured into `./env/db.env` file into `MYSQL_DATABASE` environmental variable.
+* One having the name defined upon `MYSQL_DATABASE`, mentioned above, prefixed with `test_` used for unit testing.
 
 # Networks
 
@@ -134,4 +138,14 @@ There is a script named `./bin/certgen.sh` that is used to generate the nessesar
 
 Import the CA ones to your browser.
 
-The configuration for the domains that certs are used are in the file `ssl/conf/v3.sign` read comments in it in order how to configure it.
+The configuration for the domains that certs are used are in the file `ssl/conf/v3.sign`, read comments in it, in order how to configure it.
+
+
+# Frotnend Builds
+
+A container named `esupport-frotnend-build` is used which has nodejs running and builds vite frontend assets.
+Sometimes you mane need to restart it. This can be achienved:
+
+```
+docker restart esupport-frotnend-build
+```
