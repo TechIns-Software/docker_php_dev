@@ -29,8 +29,6 @@ services:
     working_dir: "/home/node/app"
     volumes:
       - "php_app:/home/node/app"
-
-  # Supportive services (Public facing ones)
   
   nginx:
     image: nginx
@@ -59,17 +57,6 @@ services:
     volumes:
       - ./volumes/db:/var/lib/mysql
       - ./provision/mariadb/create-test-db.sh:/docker-entrypoint-initdb.d/create-test-db.sh
-
-  # s3:
-  #   image: scireum/s3-ninja
-  #   user: "0:sirius"
-  #   volumes:
-  #     - "./volumes/s3/data:/home/sirius/data"
-  #     - "./volumes/s3/logs:/home/sirius/logs"
-  #   networks:
-  #     private:
-  #     public:
-  #       ipv4_address: ${IP_BASE}.4
 
   mailpit:
     image: axllent/mailpit

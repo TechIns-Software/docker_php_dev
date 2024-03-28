@@ -35,7 +35,7 @@ if [ "${XDEBUG_VERSION}" = "3" ]; then
 
   if [ "${XDEBUG_ENABLE}" == "true" ]; then
     echo "HERE"
-   echo "xdebug.mode = debug,develop" >> ${XDEBUG_CONF_FILE}
+   echo "xdebug.mode = debug,develop,trace,profile" >> ${XDEBUG_CONF_FILE}
   else
    echo "xdebug.mode = off" >> ${XDEBUG_CONF_FILE}
   fi
