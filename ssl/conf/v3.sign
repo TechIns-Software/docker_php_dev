@@ -11,10 +11,8 @@ subjectAltName = @alt_names
 # Note: Any ip indicating record MUST start with IP.^num^=
 IP.2 = 127.0.0.1
 IP.3 = ::1 
-IP.4 = 172.161.0.2
+IP.4 = 172.161.10.2
 
 # List your domain names here
 # COnfigure any DOMAINS that need ssl here
 DNS.1 = localhost
-DNS.2 = example.local
-DNS.3 = example2.local

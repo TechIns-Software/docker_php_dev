@@ -1,24 +1,6 @@
 version: "3.8"
+name: ${APP_NAME}
 services:
-
-  # PHP APPS
-  php_app:
-    container_name: ${APP_NAME}
-    build:
-      context: .
-      dockerfile: ./dockerfiles/Dockerfile
-      args:
-        - COMPOSER_VERSION=latest
-        - XDEBUG_VERSION=latest
-        - PHP_VERSION=8.2
-    volumes:
-      - "php_app:/var/www/html"
-      - "./logs/xdebug:/var/log/xdebug"
-      - "./ssl/ca/ca.crt:/usr/local/share/cert_install/ca.crt"
-      - "./volumes/www-home:/home/www-data"
-    networks:
-      private:
-    env_file: env/php.env
 
   # Supportive services
   
@@ -34,57 +16,14 @@ services:
       - "./ssl/certs/www.crt:/etc/nginx/ssl/www.crt:ro"
       - "./ssl/certs/www.key:/etc/nginx/ssl/www.key:ro"
 
-  mariadb:
-    # Replace with your own
-    image: mariadb
-    command:
-      --max_allowed_packet=64M
-      --optimizer_use_condition_selectivity=1
-      --optimizer_switch="rowid_filter=off"
-    networks:
-      private:
-      public:
-        ipv4_address: ${IP_BASE}.3
-    env_file: env/db.env
-    volumes:
-      - ./volumes/db:/var/lib/mysql
-      - ./provision/mariadb/create-test-db.sh:/docker-entrypoint-initdb.d/create-test-db.sh
-
   js-build:
     container_name: esupport-frotnend-build
     image: node:latest
     user: "${NODEJS_UID}:node"
-    entrypoint: bash -c "ls -l && echo HELLO && npm install && npm run build_dev"
+    entrypoint: bash -c "ls -l && echo HELLO && npm install && npm run start"
     working_dir: "/home/node/app"
     volumes:
       - "php_app:/home/node/app"
-
-  # s3:
-  #   image: scireum/s3-ninja
-  #   user: "0:sirius"
-  #   volumes:
-  #     - "./volumes/s3/data:/home/sirius/data"
-  #     - "./volumes/s3/logs:/home/sirius/logs"
-  #   networks:
-  #     private:
-  #     public:
-  #       ipv4_address: ${IP_BASE}.4
-
-  mailpit:
-    image: axllent/mailpit
-    container_name: mailpit
-    restart: always
-    volumes:
-      - ./volumes/mailpit:/data
-    networks:
-      private:
-      public:
-        ipv4_address: ${IP_BASE}.6
-    environment:
-      MP_MAX_MESSAGES: 5000
-      MP_DATA_FILE: /data/mailpit.db
-      MP_SMTP_AUTH_ACCEPT_ANY: 1
-      MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
 volumes:
 
