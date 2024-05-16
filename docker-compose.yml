@@ -3,8 +3,6 @@ name: ${APP_NAME}
 
 services:
 
-  # Supportive services
-  
   nginx:
     image: nginx
     networks:
@@ -12,20 +10,25 @@ services:
       public:
         ipv4_address: ${IP_BASE}.2
     volumes:
-      - "php_app:/var/www/html"
+      - "./www:/var/www/html"
+      - "php_app_dist:/var/www/html/dist"
       - "./conf/nginx/nginx.conf:/etc/nginx/nginx.conf:ro"
       - "./ssl/certs/www.crt:/etc/nginx/ssl/www.crt:ro"
       - "./ssl/certs/www.key:/etc/nginx/ssl/www.key:ro"
-
+  
   js-build:
-    container_name: esupport-frotnend-build
     image: node:latest
     user: "${NODEJS_UID}:node"
-    entrypoint: bash -c "ls -l && echo HELLO && npm install && npm run start"
+    entrypoint: bash -c "ls -l && echo HELLO && npm install && npm start"
     working_dir: "/home/node/app"
+    environment:
+      SSL_KEY_PATH: /home/node/ssl
+    networks:
+      private:
     volumes:
       - "php_app:/home/node/app"
-
+      - "./ssl/certs:/home/node/ssl:ro"
+      
 volumes:
 
   php_app:
@@ -34,6 +37,13 @@ volumes:
       type: none
       o: bind
       device: ${PHP_APP_PATH}
+
+  php_app_dist:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PHP_APP_PATH}/dist
   
 networks:
   private:
