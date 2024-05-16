@@ -13,4 +13,5 @@ const vapidKey = "BABCEIwVE0n40VSzoLQ8dpudZig_NBM6C87v1dkJP-qLpTcZJkICLNQLGGTJ2F
 // Initialize Firebase  
 const wokerUrl = './firebase-messaging-sw.js';
 
-pushNotificationInit(firebaseConfig,vapidKey,"",wokerUrl,true)
+//        firebaseLib.pushNotificationInit(config,vapidKey,"",workerUrl)
+firebaseLib.pushNotificationInit(firebaseConfig,vapidKey,"",wokerUrl,true)

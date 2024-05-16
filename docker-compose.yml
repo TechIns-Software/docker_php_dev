@@ -6,7 +6,6 @@ services:
   nginx:
     image: nginx
     networks:
-      private:
       public:
         ipv4_address: ${IP_BASE}.2
     volumes:
@@ -21,14 +20,23 @@ services:
     user: "${NODEJS_UID}:node"
     entrypoint: bash -c "ls -l && echo HELLO && npm install && npm start"
     working_dir: "/home/node/app"
-    environment:
-      SSL_KEY_PATH: /home/node/ssl
-    networks:
-      private:
     volumes:
       - "php_app:/home/node/app"
       - "./ssl/certs:/home/node/ssl:ro"
-      
+
+  firebasedemo:
+    image: node:latest
+    user: "${NODEJS_UID}:node"
+    entrypoint: bash -c "ls -l && echo HELLO && npm install && npx parcel --https --port 443 --key=/home/node/ssl/www.key --cert=/home/node/ssl/www.crt --host ${IP_BASE}.3 src/index.html"
+    working_dir: "/home/node/app"
+    networks:
+      public:
+        ipv4_address: ${IP_BASE}.3
+    volumes:
+      - "./ssl.certs:/home/node/ssl"
+      - "firebasedemo:/home/node/app"
+      - "./ssl/certs:/home/node/ssl:ro"
+
 volumes:
 
   php_app:
@@ -45,8 +53,14 @@ volumes:
       o: bind
       device: ${PHP_APP_PATH}/dist
   
+  firebasedemo:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${FIREBASEDEMO}
+  
 networks:
-  private:
   public:
     ipam:
       config:
