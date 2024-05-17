@@ -17,3 +17,4 @@ IP.5 = 172.161.10.3
 # List your domain names here
 # COnfigure any DOMAINS that need ssl here
 DNS.1 = localhost
+DNS.2 = remote.firebaselib.local
