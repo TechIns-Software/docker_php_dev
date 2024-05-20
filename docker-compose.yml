@@ -6,11 +6,13 @@ services:
   nginx:
     image: nginx
     networks:
+      private:
       public:
         ipv4_address: ${IP_BASE}.2
     volumes:
       - "./www:/var/www/html"
       - "php_app_dist:/var/www/html/testlocal/dist"
+      - "firebase_php:/var/www/firbase_php"
       - "./conf/nginx/nginx.conf:/etc/nginx/nginx.conf:ro"
       - "./ssl/certs/www.crt:/etc/nginx/ssl/www.crt:ro"
       - "./ssl/certs/www.key:/etc/nginx/ssl/www.key:ro"
@@ -37,6 +39,28 @@ services:
       - "firebasedemo:/home/node/app"
       - "./ssl/certs:/home/node/ssl:ro"
 
+  # PHP APPS
+  php_app:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile
+    networks:
+      private:
+    volumes:
+      - "firebase_php:/var/www/firbase_php"
+      - "./logs/xdebug:/var/log/xdebug"
+      # Remove this line used for development only of xdebug tester 
+      - "./utils/test_xdebug.php:/var/www/html/test_xdebug.php"
+    environment:
+      - APP_UID=1000
+      - APP_GID=1000
+      - XDEBUG_IDE_KEY=PHPSTORM
+      - XDEBUG_PORT=9003
+      - XDEBUG_ENABLE=TRUE
+      - XDEBUG_DBGP=TRUE
+    extra_hosts:
+      host.docker.internal: host-gateway
+
 volumes:
 
   php_app:
@@ -60,7 +84,15 @@ volumes:
       o: bind
       device: ${FIREBASEDEMO}
   
+  firebase_php:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${FIREBASE_PHP}
+
 networks:
+  private:
   public:
     ipam:
       config:
