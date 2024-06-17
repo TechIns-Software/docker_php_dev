@@ -23,7 +23,7 @@ services:
     env_file: env/php.env
 
   js-build:
-    container_name: esupport-frotnend-build
+    container_name: appollon-frotnend-build
     image: node:latest
     user: "${NODEJS_UID}:node"
     entrypoint: bash -c "ls -l && echo HELLO && npm install && npm run build_dev"
