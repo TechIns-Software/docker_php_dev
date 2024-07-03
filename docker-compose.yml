@@ -11,7 +11,7 @@ services:
       args:
         - COMPOSER_VERSION=latest
         - XDEBUG_VERSION=latest
-        - PHP_VERSION=8.2
+        - PHP_VERSION=8.3
     volumes:
       - "php_app:/var/www/html"
       - "./logs/xdebug:/var/log/xdebug"
@@ -51,15 +51,6 @@ services:
       - ./volumes/db:/var/lib/mysql
       - ./provision/mariadb/create-test-db.sh:/docker-entrypoint-initdb.d/create-test-db.sh
 
-  js-build:
-    container_name: esupport-frotnend-build
-    image: node:latest
-    user: "${NODEJS_UID}:node"
-    entrypoint: bash -c "ls -l && echo HELLO && npm install && npm run build_dev"
-    working_dir: "/home/node/app"
-    volumes:
-      - "php_app:/home/node/app"
-
   # s3:
   #   image: scireum/s3-ninja
   #   user: "0:sirius"
@@ -71,21 +62,21 @@ services:
   #     public:
   #       ipv4_address: ${IP_BASE}.4
 
-  mailpit:
-    image: axllent/mailpit
-    container_name: mailpit
-    restart: always
-    volumes:
-      - ./volumes/mailpit:/data
-    networks:
-      private:
-      public:
-        ipv4_address: ${IP_BASE}.6
-    environment:
-      MP_MAX_MESSAGES: 5000
-      MP_DATA_FILE: /data/mailpit.db
-      MP_SMTP_AUTH_ACCEPT_ANY: 1
-      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+  # mailpit:
+  #   image: axllent/mailpit
+  #   container_name: mailpit
+  #   restart: always
+  #   volumes:
+  #     - ./volumes/mailpit:/data
+  #   networks:
+  #     private:
+  #     public:
+  #       ipv4_address: ${IP_BASE}.6
+  #   environment:
+  #     MP_MAX_MESSAGES: 5000
+  #     MP_DATA_FILE: /data/mailpit.db
+  #     MP_SMTP_AUTH_ACCEPT_ANY: 1
+  #     MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
 volumes:
 
