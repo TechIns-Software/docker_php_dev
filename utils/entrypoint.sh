@@ -32,12 +32,17 @@ if [ "${XDEBUG_VERSION}" = "3" ]; then
   echo "xdebug.client_port=${XDEBUG_PORT}" >> ${XDEBUG_CONF_FILE}
 
   XDEBUG_ENABLE=$(echo "${XDEBUG_ENABLE}" | tr '[:upper:]' '[:lower:]')
+  XDEBUG_PROFILE=$(echo "${XDEBUG_PROFILE}" | tr '[:upper:]' '[:lower:]')
 
-  if [ "${XDEBUG_ENABLE}" == "true" ]; then
+  if [ "${XDEBUG_ENABLE}" == "true" ] && [ "${XDEBUG_PROFILE}" == "true" ]; then
     echo "HERE"
-   echo "xdebug.mode = debug,develop" >> ${XDEBUG_CONF_FILE}
+    echo "xdebug.mode = debug,develop,profile" >> ${XDEBUG_CONF_FILE}
+  elif [ "${XDEBUG_ENABLE}" == "true" ]; then
+    echo "xdebug.mode = debug,develop" >> ${XDEBUG_CONF_FILE}
+  elif [ "${XDEBUG_PROFILE}" == "true" ]; then
+    echo "xdebug.mode = profile" >> ${XDEBUG_CONF_FILE}
   else
-   echo "xdebug.mode = off" >> ${XDEBUG_CONF_FILE}
+    echo "xdebug.mode = off" >> ${XDEBUG_CONF_FILE}
   fi
 
 else 

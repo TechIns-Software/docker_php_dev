@@ -18,8 +18,9 @@ ENV PHP_CONF_DIR="$PHP_INI_DIR/conf.d" \
     XDEBUG_PORT=9003 \
     XDEBUG_DBGP=FALSE \
     XDEBUG_ENABLE=FALSE \
+    XDEBUG_PROFILE=FALSE \
     WWW_HOME="/home/www-data" \
-    COMPOSER_MEMORY_LIMIT=-1
+    COMPOSER_MEMORY_LIMIT=-1 
 
 COPY ./utils/entrypoint.sh  /usr/local/bin/entrypoint.sh
 
