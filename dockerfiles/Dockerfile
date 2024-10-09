@@ -25,8 +25,6 @@ ENV PHP_CONF_DIR="$PHP_INI_DIR/conf.d" \
 COPY ./utils/entrypoint.sh  /usr/local/bin/entrypoint.sh
 
 RUN \
-    chown root:root /usr/local/bin/entrypoint.sh &&\
-    chmod +x /usr/local/bin/entrypoint.sh &&\
     mkdir ${WWW_HOME} &&\
     chown www-data:www-data ${WWW_HOME} &&\
     chmod -R 750 ${WWW_HOME} &&\
@@ -115,6 +113,11 @@ VOLUME /var/log/xdebug
 #     mkdir -p /var/www/.npm
 
 
+COPY ./utils/entrypoint.sh  /usr/local/bin/entrypoint.sh
+
+# I Change entrypoint more frequently
+RUN chown root:root /usr/local/bin/entrypoint.sh &&\
+    chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["php-fpm"]

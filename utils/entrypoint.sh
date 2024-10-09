@@ -30,7 +30,7 @@ if [ "${XDEBUG_VERSION}" = "3" ]; then
   echo "xdebug.log = /var/log/xdebug/xdebug.log" >> ${XDEBUG_CONF_FILE} 
   echo "xdebug.discover_client_host=false" >> ${XDEBUG_CONF_FILE}
   echo "xdebug.start_with_request = trigger" >> ${XDEBUG_CONF_FILE}
-  echo "xdebug.output_dir = \"/var/log/xdebug\cachegrind\"" >> ${XDEBUG_CONF_FILE}
+  echo "xdebug.output_dir = \"/var/log/xdebug/cachegrind\"" >> ${XDEBUG_CONF_FILE}
 
   echo "xdebug.client_host=${XDEBUG_HOST}" >> ${XDEBUG_CONF_FILE}
   echo "xdebug.client_port=${XDEBUG_PORT}" >> ${XDEBUG_CONF_FILE}
