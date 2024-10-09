@@ -22,11 +22,15 @@ cat ${XDEBUG_CONF_FILE}
 if [ "${XDEBUG_VERSION}" = "3" ]; then
   echo "SETUP XDEBUG 3"
 
+  mkdir /var/log/xdebug/cachegrind
+  chown www-data:www-data /var/log/xdebug/cachegrind
+
   echo "[xdebug]" >> ${XDEBUG_CONF_FILE} 
   echo "xdebug.max_nesting_level = 1000" >> ${XDEBUG_CONF_FILE} 
   echo "xdebug.log = /var/log/xdebug/xdebug.log" >> ${XDEBUG_CONF_FILE} 
   echo "xdebug.discover_client_host=false" >> ${XDEBUG_CONF_FILE}
   echo "xdebug.start_with_request = trigger" >> ${XDEBUG_CONF_FILE}
+  echo "xdebug.output_dir = \"/var/log/xdebug\cachegrind\"" >> ${XDEBUG_CONF_FILE}
 
   echo "xdebug.client_host=${XDEBUG_HOST}" >> ${XDEBUG_CONF_FILE}
   echo "xdebug.client_port=${XDEBUG_PORT}" >> ${XDEBUG_CONF_FILE}
@@ -104,7 +108,7 @@ echo 'case $- in
       *) return;;
 esac
 echo "WELCOME TO DEV PHP DOCKER IMG shell session."
-echo "In order to run a php script with xdebug disabled use the php_no_xdebug command."
+echo "In order to run a php script with xdebug disabled use the php_no_xdebug command instead of php."
 
 #Aliases
 alias php_no_xdebug="php -d dxdebug.mode=off"
