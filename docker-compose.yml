@@ -23,14 +23,18 @@ services:
     env_file: env/php.env
 
   js-build:
-    container_name: appollon-frotnend-build
-    image: node:latest
+    build:
+      context: .
+      dockerfile: ./dockerfiles/DockerfileJsBuild
     user: "${NODEJS_UID}:node"
-    entrypoint: bash -c "ls -l && echo HELLO && npm install && npm run build_dev"
-    working_dir: "/home/node/app"
+    command: "npm run build_dev"
+    environment:
+      - NODEJS_UID=${NODEJS_UID}
     volumes:
       - "php_app:/home/node/app"
-  
+      - "jsUtilsLib:/home/node/lib/jsUtils"
+      - './volumes/.npm-global:/home/node/.npm-global'
+
   nginx:
     image: nginx
     networks:
@@ -82,6 +86,13 @@ volumes:
       type: none
       o: bind
       device: ${PHP_APP_PATH}
+
+  jsUtilsLib:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${JS_UTILS_LIB}
   
 networks:
   private:

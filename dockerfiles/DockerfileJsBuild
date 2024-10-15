@@ -1,0 +1,33 @@
+FROM node:latest
+
+ENV NODE_JS_UID=1000
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+ENV PATH=/home/node/.npm-global/bin:$PATH
+
+RUN apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/* &&\
+    usermod -aG sudo node &&\
+    echo "node ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+COPY ./utils/entrypoint_js_build.sh /usr/bin/entrypoint.sh
+
+RUN mkdir /home/node/lib && \
+    chown node:node /home/node/lib && \
+    chown root:root /usr/bin/entrypoint.sh && \
+    chmod +x /usr/bin/entrypoint.sh &&\
+    mkdir -p /home/node/.npm-global &&\
+    chown node:node /home/node/.npm-global && \
+    chmod -R 755 /home/node/.npm-global
+
+VOLUME /home/node/lib
+VOLUME /home/node/.npm-global
+
+
+USER node
+
+# Set the working directory
+WORKDIR /home/node/app
+
+# Set npm cache to the custom location
+RUN npm config set cache /home/node/.npm-global
+
+ENTRYPOINT [ "/usr/bin/entrypoint.sh" ]
