@@ -1,0 +1,6 @@
+FROM elasticsearch:8.15.3
+
+COPY --chown=root:root --chmod=0755 ./utils/entrypoint_elastic.sh /usr/local/bin/entrypoint.sh
+
+USER root
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
